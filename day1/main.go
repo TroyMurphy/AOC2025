@@ -14,7 +14,6 @@ func check(e error) {
 }
 
 func closeFile(f *os.File) {
-	fmt.Println("closing")
 	err := f.Close()
 	if err != nil {
 		panic(err)
@@ -39,12 +38,13 @@ func main() {
 	check(err)
 
 	path := filepath.Join(curdir, "day1", "input.txt")
+	// path := filepath.Join(curdir, "day1", "sample.txt")
 	lines, err := readLines(path)
 	check(err)
 
-	part1 := Part1(lines)
-	part2 := Part2()
+	// part1 := Part1(lines)
+	part2 := Part2(lines)
 
-	fmt.Println(part1)
+	// fmt.Println(part1)
 	fmt.Println(part2)
 }
