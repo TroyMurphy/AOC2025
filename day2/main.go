@@ -2,16 +2,11 @@ package main
 
 import (
 	"bufio"
+	"day2/utils"
 	"fmt"
 	"os"
 	"path/filepath"
 )
-
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
 
 func closeFile(f *os.File) {
 	fmt.Println("closing")
@@ -23,7 +18,7 @@ func closeFile(f *os.File) {
 
 func readLines(path string) ([]string, error) {
 	file, err := os.Open(path)
-	check(err)
+	utils.Check(err)
 	defer closeFile(file)
 	var lines []string
 	scanner := bufio.NewScanner(file)
@@ -36,17 +31,16 @@ func readLines(path string) ([]string, error) {
 func main() {
 	// read lines from input.txt
 	curdir, err := os.Getwd()
-	check(err)
+	utils.Check(err)
 
-	path := filepath.Join(curdir, "DAYFOLDER", "input.txt")
-	// path := filepath.Join(curdir, "DAYFOLDER", "sample.txt")
+	path := filepath.Join(curdir, "day2", "input.txt")
+	// path := filepath.Join(curdir, "day2", "sample.txt")
 	lines, err := readLines(path)
-	check(err)
+	utils.Check(err)
 
 	part1 := Part1(lines)
 	part2 := Part2(lines)
 
 	fmt.Println(part1)
-	fmt.Println("-------------")
 	fmt.Println(part2)
 }

@@ -33,7 +33,7 @@ cp ../template/*.go .
 go mod init "${DAY_FOLDER}"
 
 # replace the string "DAYFOLDER" on line 41 of main.go with day${NEXT_DAY}
-sed -i "s/DAYFOLDER/day${DAY_FOLDER}/" main.go
+sed -i "s/DAYFOLDER/${DAY_FOLDER}/" main.go
 
 cd ..
 go work use $DAY_FOLDER
