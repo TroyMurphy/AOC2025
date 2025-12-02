@@ -17,15 +17,23 @@ fi
 DAY_FOLDER="day${NEXT_DAY}"
 
 # Run go run . NEXT_DAY
-go run ./new "$NEXT_DAY"
+go run ./new $NEXT_DAY
+echo "go run ./new $NEXT_DAY"
+
+# Terminate if $DAY_FOLDER directory does not exist
+if [ ! -d "$DAY_FOLDER" ]; then
+  echo "Error: Directory $DAY_FOLDER does not exist."
+  exit 1
+fi
 
 # Initialize go module, copy template
 cd $DAY_FOLDER
+touch sample.txt
 cp ../template/*.go .
 go mod init "${DAY_FOLDER}"
 
 # replace the string "DAYFOLDER" on line 41 of main.go with day${NEXT_DAY}
-sed -i '' "41s/DAYFOLDER/${DAY_FOLDER}/" main.go
+sed -i "s/DAYFOLDER/day${DAY_FOLDER}/" main.go
 
 cd ..
 go work use $DAY_FOLDER

@@ -39,6 +39,7 @@ func main() {
 	check(err)
 
 	path := filepath.Join(curdir, "DAYFOLDER", "input.txt")
+	// path := filepath.Join(curdir, "DAYFOLDER", "sample.txt")
 	lines, err := readLines(path)
 	check(err)
 
