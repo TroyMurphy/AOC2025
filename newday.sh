@@ -1,4 +1,5 @@
 #!/bin/bash
+source .env
 THIS_DIR="$(pwd)"
 
 # Find all dayN folders, extract N, get max
