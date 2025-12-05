@@ -37,8 +37,8 @@ func main() {
 	curdir, err := os.Getwd()
 	check(err)
 
-	// path := filepath.Join(curdir, "day5", "input.txt")
-	path := filepath.Join(curdir, "day5", "sample.txt")
+	path := filepath.Join(curdir, "day5", "input.txt")
+	// path := filepath.Join(curdir, "day5", "sample.txt")
 	lines, err := readLines(path)
 	check(err)
 
