@@ -1,9 +1,5 @@
 package main
 
-<<<<<<< Updated upstream
-func Part1(lines []string) int {
-	return 0
-=======
 import (
 	"strconv"
 )
@@ -47,5 +43,4 @@ func MaxVal(value string) int {
 		panic(err)
 	}
 	return maxVal
->>>>>>> Stashed changes
 }
