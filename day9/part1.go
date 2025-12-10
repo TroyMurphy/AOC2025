@@ -21,9 +21,9 @@ func Part1(lines []string) int64 {
 	for _, p := range pairs {
 		area := Area(p)
 		maxArea = max(area, maxArea)
-		if area != maxArea {
-			fmt.Printf("(%d,%d), (%d, %d)\r\n", p.p1.x, p.p1.y, p.p2.x, p.p2.y)
-		}
+		// if area != maxArea {
+		// 	fmt.Printf("(%d,%d), (%d, %d)\r\n", p.p1.x, p.p1.y, p.p2.x, p.p2.y)
+		// }
 	}
 	return maxArea
 }
