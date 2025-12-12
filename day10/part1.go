@@ -14,22 +14,13 @@ type lmachine struct {
 	buttons []int64
 }
 
-var (
-	logDebug bool = true
-	logHelp  bool = true
-)
-
 func Part1(lines []string) int64 {
 	machines := ParseMachines(lines)
 
 	presses := int64(0)
 	for _, m := range machines {
-		minpresses := MinPresses([]clickState{
-			{lights: m.lights, buttons: m.buttons, clicked: 0},
-		})
-		if logHelp {
-			fmt.Printf("Machine lights: %0b requires min presses: %d\r\n", m.lights, minpresses)
-		}
+		fmt.Printf("Target: %b\r\n", m.lights)
+		minpresses := MinPresses(m.lights, []reachableState{{value: 0, remainingButtons: m.buttons}}, int64(0))
 		presses += minpresses
 	}
 	return presses
@@ -48,9 +39,8 @@ func ParseMachine(line string) lmachine {
 	lightsMatch := lightsre.FindAllString(line, -1)[0]
 	lightsMatch = strings.ReplaceAll(lightsMatch, "[", "")
 	lightsMatch = strings.ReplaceAll(lightsMatch, "]", "")
-	lightsMatch = strings.ReplaceAll(lightsMatch, ".", "0")
-	lightsMatch = strings.ReplaceAll(lightsMatch, "#", "1")
-	lights, _ := strconv.ParseInt(lightsMatch, 2, 32)
+	lights := LightsToInt(lightsMatch)
+	fmt.Printf("Lights: %b \r\n", lights)
 
 	var buttons []int64
 	buttonre := regexp.MustCompile(`\(.*\)`)
@@ -72,9 +62,6 @@ func ParseButton(match string) int64 {
 		vint, _ := strconv.ParseInt(v, 10, 32)
 		output += twoPow(vint)
 	}
-	if logDebug {
-		fmt.Printf("Parsed button: %s -> %0b\r\n", match, output)
-	}
 	return output
 }
 
@@ -90,69 +77,61 @@ type clickState struct {
 
 var newStates []clickState = []clickState{}
 
-func MinPresses(states []clickState) int64 {
-	if len(states) == 0 {
+type reachableState struct {
+	value            int64
+	remainingButtons []int64
+}
+
+var checked map[string]struct{} = make(map[string]struct{})
+
+func MinPresses(target int64, reachable []reachableState, acc int64) int64 {
+	if len(reachable) == 0 {
 		return -1
 	}
-	for _, s := range states {
-		if !IsPossible(s) {
-			continue
+	fmt.Printf("Searching %d states\r\n", len(reachable))
+	var validStates []reachableState
+	for _, s := range reachable {
+		if s.value == target {
+			return acc
 		}
-		if logDebug {
-			fmt.Printf("Current lights: %0b\r\n", s.lights)
-		}
-		toClick := s.buttons
-		for i, b := range toClick {
-			afterClick := s.lights ^ b
-			if logDebug {
-				fmt.Printf("  Trying button: %0b -> %0b\r\n", b, afterClick)
-			}
-			if afterClick == 0 {
-				return s.clicked + 1
-			}
-			paredButtons := slices.Clone(toClick)
-			paredButtons = slices.Delete(paredButtons, i, i+1)
-			if len(paredButtons) == 1 {
-				if paredButtons[0] == s.lights {
-					return s.clicked + 2
-				}
+		if len(s.remainingButtons) > 0 {
+			serialized := Serialize(&s)
+			if _, exists := checked[serialized]; exists {
+				fmt.Printf("Skipping already checked state: %s\r\n", serialized)
 				continue
 			}
-			if len(paredButtons) > 0 {
-				newState := clickState{lights: afterClick, buttons: paredButtons, clicked: s.clicked + 1}
-				newStates = append(newStates, newState)
-			}
+			validStates = append(validStates, s)
+			checked[serialized] = struct{}{}
 		}
 	}
-	return MinPresses(newStates)
-}
-
-func SerializeState(state clickState) string {
-	// format the light, then the ordered buttons
-	return fmt.Sprintf("%0b|%v", state.lights, state.buttons)
-}
-
-func IsPossible(state clickState) bool {
-	lights := state.lights
-	buttons := state.buttons
-	maxBit := 0
-	for temp := lights; temp > 0; temp >>= 1 {
-		maxBit++
+	fmt.Printf("%d valid states\r\n", len(validStates))
+	var newStates []reachableState
+	for _, s := range validStates {
+		fmt.Printf("Start: %b | Buttons: ", s.value)
+		for bi, b := range s.remainingButtons {
+			fmt.Printf("%b, ", b)
+			reached := s.value ^ b
+			remaining := slices.Delete(slices.Clone(s.remainingButtons), bi, bi+1)
+			newState := reachableState{value: reached, remainingButtons: remaining}
+			newStates = append(newStates, newState)
+		}
+		fmt.Printf("\r\n")
 	}
-	for bit := 0; bit < maxBit; bit++ {
-		bitmask := int64(1) << bit
-		if (lights & bitmask) != 0 {
-			bitFound := false
-			for _, b := range buttons {
-				if (b & bitmask) != 0 {
-					bitFound = true
-					break
-				}
-			}
-			if !bitFound {
-				return false
-			}
+	// buttons should be reduced to
+	fmt.Printf("Generated %d new states\r\n", len(newStates))
+	return MinPresses(target, newStates, acc+1)
+}
+
+func Serialize(state *reachableState) string {
+	return fmt.Sprintf("%d|%v", state.value, state.remainingButtons)
+}
+
+func LightsToInt(lights string) int64 {
+	output := int64(0)
+	for i := 0; i < len(lights); i++ {
+		if lights[i] == '#' {
+			output += twoPow(int64(i))
 		}
 	}
-	return true
+	return output
 }
