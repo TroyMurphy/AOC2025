@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 	"slices"
 	"strconv"
@@ -13,9 +12,17 @@ type jmachine struct {
 	joltages []int64
 }
 
-func Part2(lines []string) int {
+func Part2(lines []string) int64 {
 	jmachines := ParseJMachines(lines)
-	fmt.Println(jmachines[0])
+	// fmt.Println(jmachines[0])
+	presses := int64(0)
+	for _, j := range jmachines {
+		presses += MinJPresses(j)
+	}
+	return presses
+}
+
+func MinJPresses(jmachine jmachine) int64 {
 	return 0
 }
 
@@ -55,7 +62,7 @@ func ParseMatrixButton(buttonString string, length int) []int64 {
 	buttonFullString := strings.ReplaceAll(buttonString, "(", "")
 	buttonFullString = strings.ReplaceAll(buttonFullString, ")", "")
 	buttonStringValues := strings.Split(buttonFullString, ",")
-	fmt.Println("Button String Values: ", buttonStringValues)
+	// fmt.Println("Button String Values: ", buttonStringValues)
 	var buttonIndexes []int
 	for _, bs := range buttonStringValues {
 		bi, _ := strconv.Atoi(bs)
