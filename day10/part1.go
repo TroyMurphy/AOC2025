@@ -9,10 +9,9 @@ import (
 	"strings"
 )
 
-type machine struct {
-	lights   int64
-	buttons  []int64
-	joltages []int64
+type lmachine struct {
+	lights  int64
+	buttons []int64
 }
 
 var (
@@ -36,15 +35,15 @@ func Part1(lines []string) int64 {
 	return presses
 }
 
-func ParseMachines(lines []string) []machine {
-	var machines []machine
+func ParseMachines(lines []string) []lmachine {
+	var machines []lmachine
 	for _, l := range lines {
 		machines = append(machines, ParseMachine(l))
 	}
 	return machines
 }
 
-func ParseMachine(line string) machine {
+func ParseMachine(line string) lmachine {
 	lightsre := regexp.MustCompile(`\[.*\]`)
 	lightsMatch := lightsre.FindAllString(line, -1)[0]
 	lightsMatch = strings.ReplaceAll(lightsMatch, "[", "")
@@ -61,7 +60,7 @@ func ParseMachine(line string) machine {
 		buttons = append(buttons, ParseButton(match))
 	}
 
-	return machine{lights: lights, buttons: buttons, joltages: []int64{}}
+	return lmachine{lights: lights, buttons: buttons}
 }
 
 func ParseButton(match string) int64 {

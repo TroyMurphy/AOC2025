@@ -42,10 +42,10 @@ func main() {
 	lines, err := readLines(path)
 	check(err)
 
-	part1 := Part1(lines)
+	// part1 := Part1(lines)
 	part2 := Part2(lines)
 
-	fmt.Println(part1)
-	fmt.Println("-------------")
+	// fmt.Println(part1)
+	// fmt.Println("-------------")
 	fmt.Println(part2)
 }
