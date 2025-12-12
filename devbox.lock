@@ -52,54 +52,6 @@
           "store_path": "/nix/store/0a3dyfq09dnkw28ap2i450wjimvdmv6s-go-1.25.4"
         }
       }
-    },
-    "lp_solve@latest": {
-      "last_modified": "2025-11-23T21:50:36Z",
-      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#lp_solve",
-      "source": "devbox-search",
-      "version": "5.5.2.11",
-      "systems": {
-        "aarch64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/853immd7sk3xy5jbs70hg2xk87qlzc7c-lp_solve-5.5.2.11",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/853immd7sk3xy5jbs70hg2xk87qlzc7c-lp_solve-5.5.2.11"
-        },
-        "aarch64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/0599y4lwa0q8v3h0ix1crm2bdk1wa7nr-lp_solve-5.5.2.11",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/0599y4lwa0q8v3h0ix1crm2bdk1wa7nr-lp_solve-5.5.2.11"
-        },
-        "x86_64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/jkxqfqiw7hy31dl8bzrkdy80vbqhc04g-lp_solve-5.5.2.11",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/jkxqfqiw7hy31dl8bzrkdy80vbqhc04g-lp_solve-5.5.2.11"
-        },
-        "x86_64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/cjpknm66dzbh7qgnivqg9pgvl506szng-lp_solve-5.5.2.11",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/cjpknm66dzbh7qgnivqg9pgvl506szng-lp_solve-5.5.2.11"
-        }
-      }
     }
   }
 }

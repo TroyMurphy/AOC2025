@@ -41,13 +41,14 @@ func MinJPresses(jmachine jmachine) int64 {
 		target = append(target, float64(jv))
 	}
 
-	vars, obj, err := SolveMinPositiveCoeffs(buttonV, target, 0)
-	if err != nil {
-		fmt.Println("Err: ", err)
-	}
-	fmt.Println(vars)
-	fmt.Println(obj)
-	return int64(obj)
+	// vars, obj, err := SolveMinPositiveCoeffs(buttonV, target, 0)
+	// if err != nil {
+	// 	fmt.Println("Err: ", err)
+	// }
+	// fmt.Println(vars)
+	// fmt.Println(obj)
+
+	return 0
 }
 
 func ParseJMachines(lines []string) []jmachine {
@@ -105,14 +106,8 @@ func ParseMatrixButton(buttonString string, length int) []int64 {
 	return output
 }
 
+// only works for square matrixes
 func SolveMinPositiveCoeffs(vectors [][]float64, target []float64, tol float64) ([]float64, float64, error) {
-	fmt.Println("Solving LP with target:", target)
-	fmt.Println("and vectors:")
-	for _, v := range vectors {
-		fmt.Println(v)
-	}
-	// Validate inputs.
-
 	n := len(target)
 	if n == 0 {
 		return nil, 0, errors.New("target must be non-empty")
