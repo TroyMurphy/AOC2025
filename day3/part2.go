@@ -1,5 +1,6 @@
 package main
 
+<<<<<<< Updated upstream
 import (
 	"strconv"
 )
@@ -46,4 +47,8 @@ func MaxVoltageRec(numbers []int, take int, acc int64) int64 {
 	}
 
 	return MaxVoltageRec(numbers[searchIndex+1:], take-1, (acc*int64(10))+int64(searchMax))
+=======
+func Part2(lines []string) int {
+	return 0
+>>>>>>> Stashed changes
 }

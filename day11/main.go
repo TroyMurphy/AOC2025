@@ -14,7 +14,6 @@ func check(e error) {
 }
 
 func closeFile(f *os.File) {
-	fmt.Println("closing")
 	err := f.Close()
 	if err != nil {
 		panic(err)
@@ -38,20 +37,15 @@ func main() {
 	curdir, err := os.Getwd()
 	check(err)
 
-<<<<<<< Updated upstream
-	// path := filepath.Join(curdir, "day3", "input.txt")
-	path := filepath.Join(curdir, "day3", "sample.txt")
-=======
-	path := filepath.Join(curdir, "day3", "input.txt")
-	// path := filepath.Join(curdir, "day3", "sample.txt")
->>>>>>> Stashed changes
+	path := filepath.Join(curdir, "day11", "input.txt")
+	// path := filepath.Join(curdir, "day11", "sample.txt")
 	lines, err := readLines(path)
 	check(err)
 
-	part1 := Part1(lines)
+	// part1 := Part1(lines)
 	part2 := Part2(lines)
 
-	fmt.Println(part1)
-	fmt.Println("-------------")
+	// fmt.Println(part1)
+	// fmt.Println("-------------")
 	fmt.Println(part2)
 }
